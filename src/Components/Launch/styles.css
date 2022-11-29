@@ -1,0 +1,37 @@
+.launch-card {
+  width: 800px;
+  /* margin: auto; */
+  margin-bottom: 20px;
+  height: 200px;
+  display: flex;
+  box-sizing: border-box;
+  box-shadow: 5px 5px 10px black;
+  padding: 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.launch-image {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.launch-card img {
+  width: 200px;
+  height: 160px;
+  margin-right: 20px;
+  margin-left: 10px;
+  border-radius: 5px;
+}
+.launch-card p {
+  text-align: justify;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-top: 20px;
+  color: grey;
+}
+.launch-card h2 {
+  color: cadetblue;
+}
