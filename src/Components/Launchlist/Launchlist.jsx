@@ -1,33 +1,48 @@
+import axios from "axios";
 import React from "react";
 import { Launch } from "../Launch/Launch";
 import "./styles.css";
 export class Launchlist extends React.Component {
+  state = {
+    launches: [],
+  };
+  componentDidMount = () => {
+    this.getlaunches();
+  };
+  getlaunches = () => {
+    axios
+      .get("https://api.spacexdata.com/v3/launches")
+      .then((response) => {
+        this.setState({
+          launches: response.data,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  launchList = () => {
+    return this.state.launches.map((launch) => {
+      console.log(launch);
+      return (
+        <Launch
+          banner={
+            launch.links.flickr_images.length > 0
+              ? launch.links.flickr_images[0]
+              : "https://content.fortune.com/wp-content/uploads/2020/05/SpaceX-NASA-Launch-04.jpg"
+          }
+          title={launch.mission_name}
+          date={launch.launch_date_local}
+          description={launch.details}
+        />
+      );
+    });
+  };
+
   render() {
-    return (
-      <div className="launchlist">
-        <Launch
-          banner="https://content.fortune.com/wp-content/uploads/2020/05/SpaceX-NASA-Launch-04.jpg"
-          title="Falconsat"
-          date="2006-03-25T10:30:00+12:00"
-          description=" Falcon 9 is a reusable, two-stage rocket designed and manufactured
-        by SpaceX for the reliable and safe transport of people and payloads
-        into Earth orbit and beyond. Falcon 9 is the world’s first orbital
-        class reusable rocket. Reusability allows SpaceX to refly the most
-        expensive parts of the rocket, which in turn drives down the cost of
-        space access."
-        />
-        <Launch
-          banner="https://content.fortune.com/wp-content/uploads/2020/05/SpaceX-NASA-Launch-04.jpg"
-          title="Falconsat"
-          date="2006-03-25T10:30:00+12:00"
-          description=" Falcon 9 is a reusable, two-stage rocket designed and manufactured
-        by SpaceX for the reliable and safe transport of people and payloads
-        into Earth orbit and beyond. Falcon 9 is the world’s first orbital
-        class reusable rocket. Reusability allows SpaceX to refly the most
-        expensive parts of the rocket, which in turn drives down the cost of
-        space access."
-        />
-      </div>
-    );
+    console.log(this.state.launches);
+    //convert each launch object into a component
+    return <div className="launchlist">{this.launchList()}</div>;
   }
 }
